@@ -72,6 +72,16 @@
     ```
 5. **접속 테스트**
 6. **리소스 삭제**
+   ```bash
+   # 특정 리소스만 타겟하여 삭제 (클러스터, 인스턴스, 전달 규칙, IP)
+   terraform destroy -target=google_alloydb_instance.primary -var-file=terraform.tfvars
+   terraform destroy -target=google_compute_forwarding_rule.psc_endpoint -var-file=terraform.tfvars
+   terraform destroy -target=google_compute_address.psc_ip -var-file=terraform.tfvars
+   terraform destroy -target=google_alloydb_cluster.main -var-file=terraform.tfvars
+
+   # 또는 전체 리소스 삭제 (이 Terraform 구성으로 관리되는 모든 것)
+   terraform destroy -var-file=terraform.tfvars
+   ```
 
 # 중요 참고 사항:
 
