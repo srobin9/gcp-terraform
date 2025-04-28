@@ -70,7 +70,8 @@
     ```bash
     terraform apply -var-file=terraform.tfvars
     ```
-    (비밀번호 등 민감한 변수는 `-var` 플래그나 환경 변수로 전달하는 것이 더 안전합니다: `terraform apply -var="alloydb_password=your-secure-password-here"`)
+5. **접속 테스트**
+6. **리소스 삭제**
 
 # 중요 참고 사항:
 
