@@ -10,18 +10,6 @@ variable "region" {
   default     = "us-central1"
 }
 
-variable "network_name" {
-  description = "AlloyDB 클러스터 및 PSC 엔드포인트가 연결될 VPC 네트워크 이름"
-  type        = string
-  default     = "default" # 기존 'default' 네트워크 사용 가정
-}
-
-variable "subnetwork_name" {
-  description = "PSC 엔드포인트에 사용할 내부 IP 주소를 할당할 서브네트워크 이름"
-  type        = string
-  # default = "default" # 사용자의 서브넷 이름으로 변경 필요 (예: default)
-}
-
 variable "cluster_id" {
   description = "생성할 AlloyDB 클러스터의 ID"
   type        = string
@@ -47,10 +35,29 @@ variable "alloydb_password_secret_id" {
   default     = "alloydb-initial-password" # 사전 준비에서 생성한 시크릿 이름과 일치해야 함
 }
 
+variable "alloydb_password_secret_version" {
+  description = "사용할 시크릿 버전 ('latest' 또는 특정 버전 번호)"
+  type        = string
+  default     = "latest"
+}
+
 variable "instance_cpu_count" {
   description = "AlloyDB 인스턴스의 vCPU 개수"
   type        = number
   default     = 2 # PSC 테스트용으로 최소 사양 고려
+}
+
+# PSC Related Variables
+variable "network_name" {
+  description = "AlloyDB 클러스터 및 PSC 엔드포인트가 연결될 VPC 네트워크 이름"
+  type        = string
+  default     = "default" # 기존 'default' 네트워크 사용 가정
+}
+
+variable "subnetwork_name" {
+  description = "PSC 엔드포인트에 사용할 내부 IP 주소를 할당할 서브네트워크 이름"
+  type        = string
+  # default = "default" # 사용자의 서브넷 이름으로 변경 필요 (예: default)
 }
 
 variable "psc_ip_name" {

@@ -1,4 +1,9 @@
 # --- Data Sources ---
+# --- Project Number 가져오기 Data Source ---
+data "google_project" "current" {
+  project_id = var.project_id
+}
+
 data "google_compute_network" "main" {
   project = var.project_id
   name    = var.network_name
