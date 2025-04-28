@@ -1,7 +1,3 @@
-네, 지적 감사합니다. 이전 버전에 중복되거나 정제되지 않은 부분이 있었던 것 같습니다. 내용을 간결하게 다듬고 흐름을 개선하여 README 파일을 다시 작성했습니다.
-
----
-
 # **AlloyDB PSC 연결 Terraform 설정 및 테스트 가이드**
 **(AlloyDB PSC Connection Terraform Setup and Test Guide)**
 
@@ -165,7 +161,3 @@ terraform destroy -var-file=terraform.tfvars
     *   [compute\_forwarding\_rule](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_forwarding_rule)
 *   Google Secret Manager: [https://cloud.google.com/secret-manager/docs?hl=ko](https://cloud.google.com/secret-manager/docs?hl=ko)
 *   Cloud Run VPC 연결: [https://cloud.google.com/run/docs/configuring/connecting-vpc?hl=ko](https://cloud.google.com/run/docs/configuring/connecting-vpc?hl=ko)
-
----
-
-이 버전이 더 명확하고 필요한 정보를 잘 전달하기를 바랍니다.
