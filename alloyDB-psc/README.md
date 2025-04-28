@@ -141,22 +141,24 @@ PSC는 VPC 네트워크 내부에 엔드포인트(전달 규칙의 IP 주소)를
         # 환경 변수 설정 (PSC IP, 사용자, DB 이름)
         # export PSC_ENDPOINT_IP="Terraform_출력_IP" # 이미 설정했다면 생략
         export ALLOYDB_USER="postgres" # 또는 Terraform에서 설정한 사용자
-        export ALLOYDB_DBNAME="movies" # 또는 Terraform에서 설정한 DB 이름
 
-        echo "AlloyDB 연결 시도 (비밀번호 입력 필요)..."
-        psql -h $PSC_ENDPOINT_IP -U $ALLOYDB_USER -d $ALLOYDB_DBNAME
+        echo "AlloyDB 기본 DB 연결 시도 (비밀번호 입력 필요)..."
+        # 데이터베이스 이름을 'postgres'로 변경
+        psql -h $PSC_ENDPOINT_IP -U $ALLOYDB_USER -d postgres
         ```
     *   위 명령어를 실행하면 **비밀번호를 묻는 프롬프트**가 나타납니다. Secret Manager에 저장하고 Terraform `apply` 시 사용했던 비밀번호를 입력합니다.
-    *   **성공 시:** `psql (버전)` 정보와 함께 `movies=>` (또는 해당 데이터베이스 이름) 와 같은 **psql 프롬프트**가 나타납니다. 이는 PSC 엔드포인트를 통해 AlloyDB에 성공적으로 연결되었음을 의미합니다.
-    *   **psql 프롬프트에서 테스트:**
-        *   `\l` : 데이터베이스 목록 보기
-        *   `\dt` : 현재 데이터베이스의 테이블 목록 보기 (초기 상태이므로 테이블이 없을 수 있음)
+    *   성공 시: psql (버전) 정보와 함께 postgres=> 와 같은 psql 프롬프트가 나타납니다. 이는 PSC 엔드포인트를 통한 네트워크 연결 및 사용자 인증이 성공했음을 의미합니다.
     *   **psql 종료:** `\q`를 입력하고 Enter 키를 누릅니다.
     *   **실패 시:** `psql: error: connection to server at ... failed: ...` 와 같은 오류 메시지가 표시됩니다. 원인은 다음과 같을 수 있습니다.
         *   잘못된 비밀번호 입력
         *   잘못된 사용자 이름 또는 데이터베이스 이름
         *   네트워크 연결 문제 (5단계 테스트 실패 시)
         *   AlloyDB 인스턴스 자체의 문제 (가능성 낮음)
+    *   **`movies` 데이터베이스 생성 및 확장 활성화:** 테스트
+       ```bash
+       psql -U postgres -h $PSC_ENDPOINT_IP -c 'create DATABASE movies'
+       psql -U postgres -h $PSC_ENDPOINT_IP -d movies -c 'CREATE EXTENSION IF NOT EXISTS alloydb_scann CASCADE;'
+       ```
 
 7.  **테스트 VM 정리:**
     *   테스트가 완료되면 GCE VM에서 `exit` 명령어로 접속을 종료합니다.
