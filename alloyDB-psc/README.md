@@ -1,4 +1,4 @@
-**핵심 원리:**
+# 핵심 원리:
 
 1.  AlloyDB 클러스터를 생성하면 Google Cloud가 해당 클러스터에 대한 **서비스 연결(Service Attachment)** 을 자동으로 생성하고 노출합니다.
 2.  사용자의 VPC 네트워크 내에 **내부 IP 주소**를 예약합니다.
@@ -6,7 +6,7 @@
 4.  AlloyDB 초기 사용자 비밀번호를 **Google Secret Manager**에 저장하고 Terraform 코드에서 해당 시크릿을 참조합니다.
 5.  애플리케이션(예: Cloud Run, GKE, Compute Engine)은 VPC 내에서 이 **전달 규칙의 IP 주소**로 연결하여 AlloyDB에 접속합니다.
 
-**사전 준비 사항:**
+# 사전 준비 사항:
 
 1.  **Secret Manager API 활성화:** Terraform을 실행하기 전에 프로젝트에서 Secret Manager API가 활성화되어 있어야 합니다. (아래 코드에 자동으로 포함되도록 수정했습니다.)
 2.  **비밀번호 시크릿 생성:** Secret Manager에 AlloyDB 비밀번호를 저장하는 시크릿을 **미리 생성**해야 합니다.
@@ -44,7 +44,7 @@
     #   --project=${PROJECT_ID}
     ```
 
-**사용 방법:**
+# 사용 방법:
 1.  **변수 설정:**
     *   `terraform.tfvars` 파일을 생성하거나 환경 변수를 사용하여 필요한 변수 (`project_id`, `subnetwork_name`, `alloydb_password` 등)의 값을 설정합니다. `subnetwork_name`은 PSC 엔드포인트 IP를 할당할 서브넷의 실제 이름으로 변경해야 합니다.
     *   **`terraform.tfvars` 예시:**
@@ -72,7 +72,7 @@
     ```
     (비밀번호 등 민감한 변수는 `-var` 플래그나 환경 변수로 전달하는 것이 더 안전합니다: `terraform apply -var="alloydb_password=your-secure-password-here"`)
 
-**중요 참고 사항:**
+# 중요 참고 사항:
 
 *   **서브네트워크:** PSC 엔드포인트에 내부 IP를 할당하려면 **반드시 서브네트워크를 지정**해야 합니다. `var.subnetwork_name` 변수에 올바른 서브넷 이름을 입력하세요.
 *   **애플리케이션 연결:** 이 Terraform 코드로 생성된 후, 애플리케이션(Cloud Run 등)은 AlloyDB 인스턴스의 직접적인 Private IP가 아닌, **`output "psc_endpoint_ip_address"`** 로 출력되는 **PSC 엔드포인트 IP 주소**로 연결해야 합니다. 데이터베이스 연결 문자열이나 AlloyDB Python 커넥터 설정 시 이 PSC 엔드포인트 IP를 호스트(host)로 사용해야 합니다. 포트는 여전히 PostgreSQL 기본 포트(5432)입니다.
