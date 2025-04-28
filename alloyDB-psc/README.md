@@ -155,10 +155,10 @@ PSC는 VPC 네트워크 내부에 엔드포인트(전달 규칙의 IP 주소)를
         *   네트워크 연결 문제 (5단계 테스트 실패 시)
         *   AlloyDB 인스턴스 자체의 문제 (가능성 낮음)
     *   **`movies` 데이터베이스 생성 및 확장 활성화:** 테스트
-       ```bash
-       psql -U postgres -h $PSC_ENDPOINT_IP -c 'create DATABASE movies'
-       psql -U postgres -h $PSC_ENDPOINT_IP -d movies -c 'CREATE EXTENSION IF NOT EXISTS alloydb_scann CASCADE;'
-       ```
+        ```bash
+        psql -U postgres -h $PSC_ENDPOINT_IP -c 'create DATABASE movies'
+        psql -U postgres -h $PSC_ENDPOINT_IP -d movies -c 'CREATE EXTENSION IF NOT EXISTS alloydb_scann CASCADE;'
+        ```
 
 7.  **테스트 VM 정리:**
     *   테스트가 완료되면 GCE VM에서 `exit` 명령어로 접속을 종료합니다.
